@@ -5,7 +5,8 @@ import java.util.List;
 
 public class WorkFileSystem {
 
-    public static void createFile(List<String> pathNames, StringBuilder log, String path) {
+    public static boolean createFile(List<String> pathNames, StringBuilder log, String path) {
+        boolean res = true;
         try {
             for (String str : pathNames) {
                 File file = new File(path + str);
@@ -13,15 +14,24 @@ public class WorkFileSystem {
                     log.append(String.format("Файл %s создан\n", str));
             }
         } catch (IOException e) {
+            res = false;
             log.append(e.getMessage());
         }
+        return res;
     }
 
-    public static void createDirectory(List<String> pathNames, StringBuilder log, String path) {
-        for (String str : pathNames) {
-            File dir = new File(path + str);
-            if (dir.mkdir())
-                log.append(String.format("Директория %s создана\n", str));
+    public static boolean createDirectory(List<String> pathNames, StringBuilder log, String path) {
+        boolean res = true;
+        try {
+            for (String str : pathNames) {
+                File dir = new File(path + str);
+                if (dir.mkdir())
+                    log.append(String.format("Директория %s создана\n", str));
+            }
+        } catch (Exception e) {
+            res = false;
+            log.append(e.getMessage());
         }
+        return res;
     }
 }

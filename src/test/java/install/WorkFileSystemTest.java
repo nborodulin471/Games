@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WorkFileSystemTest {
 
@@ -18,17 +19,22 @@ class WorkFileSystemTest {
     @BeforeAll
     static void init() {
         log = new StringBuilder();
+        // на лекции про мокито сказали, что так тестировать не надо. Т.к это внешняя зависимость
+        // к сожалению, осознал это когда уже отправил на проверку))
+        // вопрос: тогда в контексте данной домашки создание файлов вообще тестировать не надо?
         path = "/home/nick/games/";
     }
 
     @Test
     void testCreateFile() {
-        WorkFileSystem.createFile(Arrays.asList("test.txt"), log, path);
+       boolean res = WorkFileSystem.createFile(Arrays.asList("test.txt"), log, path);
+       assertTrue(res);
     }
 
     @Test
     void testCreateDirectory() {
-        WorkFileSystem.createDirectory(Arrays.asList("/test", "/test1"), log, path);
+        boolean res = WorkFileSystem.createDirectory(Arrays.asList("/test", "/test1"), log, path);
+        assertTrue(res);
     }
 
     @Test
